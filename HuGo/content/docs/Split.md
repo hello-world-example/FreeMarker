@@ -8,7 +8,7 @@
 
 > http://www.kerneler.com/freemarker2.3.23/ref_directive_include.html
 >
-> 主要用于导出模板片段
+> 主要用于导入模板片段
 
 ```html
 <!-- 查找指定文件 -->
