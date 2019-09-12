@@ -27,7 +27,7 @@
       
       <guid>https://hello-world-example.github.io/FreeMarker/docs/Split/</guid>
       <description>拆分模板 include  http://www.kerneler.com/freemarker2.3.23/ref_directive_include.html
-主要用于导出模板片段
+主要用于导入模板片段
  &amp;lt;!-- 查找指定文件 --&amp;gt; &amp;lt;#include &amp;#34;/common/copyright.ftl&amp;#34;&amp;gt; &amp;lt;!-- 从任意目录查找 --&amp;gt; &amp;lt;#include &amp;#34;*/commons/footer.ftl&amp;#34;&amp;gt; import  http://www.kerneler.com/freemarker2.3.23/ref_directive_import.html
 主要用来定 声明命名空间，导入指定模板中 宏、函数、变量 等
  &amp;lt;#import &amp;#34;/libs/mylib.ftl&amp;#34; as my&amp;gt; &amp;lt;@my.copyright date=&amp;#34;1999-2002&amp;#34;/&amp;gt; macro  http://www.kerneler.com/freemarker2.3.23/ref_directive_macro.html
