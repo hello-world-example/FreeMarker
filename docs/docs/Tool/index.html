@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tool | FreeMarker</title>
+
+
+<link rel="stylesheet" href="/FreeMarker/book.min.79de1f7861b0c98f453c0a93bebf3608a280809e417787746c373699639900d7.css">
+
+
+
+
+<link rel="icon" href="/FreeMarker/favicon.png" type="image/x-icon">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" style="display: none" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="https://hello-world-example.github.io/FreeMarker/">FreeMarker</a>
+</h2>
+
+
+
+
+
+
+    
+  
+  
+  
+
+  <style>
+  nav ul a[href$="\2f FreeMarker\2f docs\2fTool\2f "] {
+      color: #004ed0;
+  }
+  </style>
+
+<ul>
+<li><a href="/FreeMarker/docs/FAQ/">常见问题</a></li>
+<li><a href="/FreeMarker/docs/Tool/">StringTemplate 工具类</a></li>
+<li><a href="/FreeMarker/docs/Split/">拆分模板</a></li>
+</ul>
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/FreeMarker/svg/menu.svg" alt="Menu" />
+  </label>
+  <strong>Tool</strong>
+</header>
+
+      
+<article class="markdown">
+
+<h1 id="stringtemplate-工具类">StringTemplate 工具类</h1>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#f92672">import</span> <span style="color:#a6e22e">freemarker</span>.<span style="color:#a6e22e">cache</span>.<span style="color:#a6e22e">StringTemplateLoader</span>;
+<span style="color:#f92672">import</span> <span style="color:#a6e22e">freemarker</span>.<span style="color:#a6e22e">template</span>.<span style="color:#a6e22e">Configuration</span>;
+<span style="color:#f92672">import</span> <span style="color:#a6e22e">freemarker</span>.<span style="color:#a6e22e">template</span>.<span style="color:#a6e22e">Template</span>;
+<span style="color:#f92672">import</span> <span style="color:#a6e22e">freemarker</span>.<span style="color:#a6e22e">template</span>.<span style="color:#a6e22e">TemplateException</span>;
+<span style="color:#f92672">import</span> <span style="color:#a6e22e">lombok</span>.<span style="color:#a6e22e">extern</span>.<span style="color:#a6e22e">slf4j</span>.<span style="color:#a6e22e">Slf4j</span>;
+
+<span style="color:#f92672">import</span> <span style="color:#a6e22e">java</span>.<span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">IOException</span>;
+<span style="color:#f92672">import</span> <span style="color:#a6e22e">java</span>.<span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">StringWriter</span>;
+
+<span style="color:#a6e22e">@Slf4j</span>
+<span style="color:#66d9ef">public</span> <span style="color:#a6e22e">class</span> FreeMarkerTool {
+
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">static</span> <span style="color:#66d9ef">final</span> <span style="color:#a6e22e">Configuration</span> CONF <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Configuration(Configuration.<span style="color:#a6e22e">VERSION_2_3_21</span>);
+
+    <span style="color:#66d9ef">static</span> {
+        CONF.<span style="color:#a6e22e">setDefaultEncoding</span>(<span style="color:#e6db74">&#34;UTF-8&#34;</span>);
+        CONF.<span style="color:#a6e22e">setLogTemplateExceptions</span>(<span style="color:#66d9ef">true</span>);
+        CONF.<span style="color:#a6e22e">setTemplateLoader</span>(<span style="color:#66d9ef">new</span> StringTemplateLoader());
+    }
+
+    <span style="color:#75715e">/**
+</span><span style="color:#75715e">     * @param data            模版数据
+</span><span style="color:#75715e">     * @param templateContent 模版内容
+</span><span style="color:#75715e">     */</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">static</span> String <span style="color:#a6e22e">process</span>(Object <span style="color:#a6e22e">data</span>, String <span style="color:#a6e22e">templateContent</span>) <span style="color:#66d9ef">throws</span> <span style="color:#a6e22e">TemplateException</span>, IOException {
+
+        String <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> tplKey(templateContent);
+
+        StringTemplateLoader <span style="color:#a6e22e">templateLoader</span> <span style="color:#f92672">=</span> (StringTemplateLoader) CONF.<span style="color:#a6e22e">getTemplateLoader</span>();
+        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> <span style="color:#f92672">==</span> templateLoader.<span style="color:#a6e22e">findTemplateSource</span>(name)) {
+            templateLoader.<span style="color:#a6e22e">putTemplate</span>(name, templateContent);
+        }
+
+
+        <span style="color:#66d9ef">try</span> (StringWriter <span style="color:#a6e22e">writer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> StringWriter()) {
+            Template <span style="color:#a6e22e">template</span> <span style="color:#f92672">=</span> CONF.<span style="color:#a6e22e">getTemplate</span>(name);
+            template.<span style="color:#a6e22e">process</span>(data, writer);
+            <span style="color:#66d9ef">return</span> writer.<span style="color:#a6e22e">toString</span>();
+        }
+    }
+
+    <span style="color:#66d9ef">private</span> <span style="color:#a6e22e">static</span> String <span style="color:#a6e22e">tplKey</span>(String <span style="color:#a6e22e">ftlContent</span>) {
+        <span style="color:#66d9ef">return</span> String.<span style="color:#a6e22e">valueOf</span>(ftlContent.<span style="color:#a6e22e">hashCode</span>());
+    }
+
+}</code></pre></div>
+<h2 id="read-more">Read More</h2>
+
+<ul>
+<li><a href="http://www.kerneler.com/freemarker2.3.23/pgui.html">程序开发指南</a></li>
+</ul>
+</article>
+
+      
+<div class="book-footer justify-end">
+  
+  
+  <div>
+    <a href="https://github.com/hello-world-example/FreeMarker/edit/master/HuGo/content/docs/Tool.md" target="_blank" rel="noopener">
+      <img src="/FreeMarker/svg/edit.svg" alt="Edit" /> Edit this page
+    </a>
+  </div>
+  
+</div>
+
+
+      
+    </div>
+
+    
+  
+
+
+
+  </main>
+  
+  
+  
+</body>
+
+</html>

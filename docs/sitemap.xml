@@ -13,6 +13,15 @@
   </url>
   
   <url>
+    <loc>https://hello-world-example.github.io/FreeMarker/docs/Split/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://hello-world-example.github.io/FreeMarker/docs/Tool/</loc>
+  </url>
+  
+  <url>
     <loc>https://hello-world-example.github.io/FreeMarker/docs/</loc>
   </url>
   

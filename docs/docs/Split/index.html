@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split | FreeMarker</title>
+
+
+<link rel="stylesheet" href="/FreeMarker/book.min.79de1f7861b0c98f453c0a93bebf3608a280809e417787746c373699639900d7.css">
+
+
+
+
+<link rel="icon" href="/FreeMarker/favicon.png" type="image/x-icon">
+
+
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body>
+  <input type="checkbox" style="display: none" id="menu-control" />
+  <main class="flex container">
+
+    <aside class="book-menu fixed">
+      <nav>
+<h2 class="book-brand">
+  <a href="https://hello-world-example.github.io/FreeMarker/">FreeMarker</a>
+</h2>
+
+
+
+
+
+
+    
+  
+  
+  
+
+  <style>
+  nav ul a[href$="\2f FreeMarker\2f docs\2fSplit\2f "] {
+      color: #004ed0;
+  }
+  </style>
+
+<ul>
+<li><a href="/FreeMarker/docs/FAQ/">常见问题</a></li>
+<li><a href="/FreeMarker/docs/Tool/">StringTemplate 工具类</a></li>
+<li><a href="/FreeMarker/docs/Split/">拆分模板</a></li>
+</ul>
+
+
+
+
+
+
+
+</nav>
+
+
+<script>
+(function() {
+  var menu = document.querySelector("aside.book-menu nav");
+  addEventListener("beforeunload", function(event) {
+    localStorage.setItem("menu.scrollTop", menu.scrollTop);
+  });
+  menu.scrollTop = localStorage.getItem("menu.scrollTop");
+})();
+</script>
+
+    </aside>
+
+    <div class="book-page">
+      <header class="flex align-center justify-between book-header">
+  <label for="menu-control">
+    <img src="/FreeMarker/svg/menu.svg" alt="Menu" />
+  </label>
+  <strong>Split</strong>
+</header>
+
+      
+<article class="markdown">
+
+<h1 id="拆分模板">拆分模板</h1>
+
+<h2 id="include">include</h2>
+
+<blockquote>
+<p><a href="http://www.kerneler.com/freemarker2.3.23/ref_directive_include.html">http://www.kerneler.com/freemarker2.3.23/ref_directive_include.html</a></p>
+
+<p>主要用于导出模板片段</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- 查找指定文件 --&gt;</span>
+<span style="color:#960050;background-color:#1e0010">&lt;</span>#include &#34;/common/copyright.ftl&#34;&gt;
+  
+<span style="color:#75715e">&lt;!-- 从任意目录查找 --&gt;</span>
+<span style="color:#960050;background-color:#1e0010">&lt;</span>#include &#34;*/commons/footer.ftl&#34;&gt;</code></pre></div>
+<h2 id="import">import</h2>
+
+<blockquote>
+<p><a href="http://www.kerneler.com/freemarker2.3.23/ref_directive_import.html">http://www.kerneler.com/freemarker2.3.23/ref_directive_import.html</a></p>
+
+<p>主要用来定 声明命名空间，导入指定模板中 <strong>宏</strong>、<strong>函数</strong>、<strong>变量</strong> 等</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>#import &#34;/libs/mylib.ftl&#34; as my&gt;
+
+<span style="color:#960050;background-color:#1e0010">&lt;</span>@my.copyright date=&#34;1999-2002&#34;/&gt;</code></pre></div>
+<h2 id="macro">macro</h2>
+
+<blockquote>
+<p><a href="http://www.kerneler.com/freemarker2.3.23/ref_directive_macro.html">http://www.kerneler.com/freemarker2.3.23/ref_directive_macro.html</a></p>
+</blockquote>
+
+<h3 id="无参数宏">无参数宏</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>#macro test&gt;
+  Test text
+<span style="color:#960050;background-color:#1e0010">&lt;</span>/#macro&gt;
+
+<span style="color:#75715e">&lt;!-- 调用 宏 --&gt;</span>
+<span style="color:#960050;background-color:#1e0010">&lt;</span>@test/&gt;</code></pre></div>
+<h3 id="有参数宏">有参数宏</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>#macro test foo bar baaz&gt;
+  Test text, and the params: ${foo}, ${bar}, ${baaz}
+<span style="color:#960050;background-color:#1e0010">&lt;</span>/#macro&gt;
+
+<span style="color:#960050;background-color:#1e0010">&lt;</span>@test foo=&#34;a&#34; bar=&#34;b&#34; baaz=5*5-2/&gt;</code></pre></div>
+<h3 id="可变参数宏">可变参数宏</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>#macro img src extra...&gt;
+  &lt;<span style="color:#f92672">img</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/context${src?html}&#34;</span> 
+  <span style="color:#960050;background-color:#1e0010">&lt;#</span><span style="color:#a6e22e">list</span> <span style="color:#a6e22e">extra</span><span style="color:#960050;background-color:#1e0010">?</span><span style="color:#a6e22e">keys</span> <span style="color:#a6e22e">as</span> <span style="color:#a6e22e">attr</span>&gt;
+    ${attr}=&#34;${extra[attr]?html}&#34;
+  <span style="color:#960050;background-color:#1e0010">&lt;</span>/#list&gt;
+  &gt;
+<span style="color:#960050;background-color:#1e0010">&lt;</span>/#macro&gt;
+
+<span style="color:#960050;background-color:#1e0010">&lt;</span>@img src=&#34;/images/test.png&#34; width=100 height=50 alt=&#34;Test&#34;/&gt;</code></pre></div>
+<h3 id="嵌套宏">嵌套宏</h3>
+
+<blockquote>
+<p>可用来定制整个页面的结构</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>#macro do_twice&gt;
+  1. <span style="color:#960050;background-color:#1e0010">&lt;</span>#nested&gt;
+  2. <span style="color:#960050;background-color:#1e0010">&lt;</span>#nested&gt;
+<span style="color:#960050;background-color:#1e0010">&lt;</span>/#macro&gt;
+
+<span style="color:#960050;background-color:#1e0010">&lt;</span>@do_twice&gt;something<span style="color:#960050;background-color:#1e0010">&lt;</span>/@do_twice&gt;</code></pre></div>
+<h2 id="function">function</h2>
+
+<blockquote>
+<p><a href="http://www.kerneler.com/freemarker2.3.23/ref_directive_function.html">http://www.kerneler.com/freemarker2.3.23/ref_directive_function.html</a></p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#960050;background-color:#1e0010">&lt;</span>#function avg nums...&gt;
+  <span style="color:#960050;background-color:#1e0010">&lt;</span>#local sum = 0&gt;
+  <span style="color:#960050;background-color:#1e0010">&lt;</span>#list nums as num&gt;
+    <span style="color:#960050;background-color:#1e0010">&lt;</span>#local sum = sum + num&gt;
+  <span style="color:#960050;background-color:#1e0010">&lt;</span>/#list&gt;
+  <span style="color:#960050;background-color:#1e0010">&lt;</span>#if nums?size != 0&gt;
+    <span style="color:#960050;background-color:#1e0010">&lt;</span>#return sum / nums?size&gt;
+  <span style="color:#960050;background-color:#1e0010">&lt;</span>/#if&gt;
+<span style="color:#960050;background-color:#1e0010">&lt;</span>/#function&gt;
+    
+${avg(10, 20)}
+${avg(10, 20, 30, 40)}
+${avg()!&#34;N/A&#34;}</code></pre></div>
+<h2 id="read-more">Read More</h2>
+
+<ul>
+<li><a href="http://www.kerneler.com/freemarker2.3.23/ref_directives.html">指令参考</a></li>
+</ul>
+</article>
+
+      
+<div class="book-footer justify-end">
+  
+  
+  <div>
+    <a href="https://github.com/hello-world-example/FreeMarker/edit/master/HuGo/content/docs/Split.md" target="_blank" rel="noopener">
+      <img src="/FreeMarker/svg/edit.svg" alt="Edit" /> Edit this page
+    </a>
+  </div>
+  
+</div>
+
+
+      
+    </div>
+
+    
+  
+
+  <aside class="book-toc level-3 fixed">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#拆分模板">拆分模板</a>
+<ul>
+<li><a href="#include">include</a></li>
+<li><a href="#import">import</a></li>
+<li><a href="#macro">macro</a>
+<ul>
+<li><a href="#无参数宏">无参数宏</a></li>
+<li><a href="#有参数宏">有参数宏</a></li>
+<li><a href="#可变参数宏">可变参数宏</a></li>
+<li><a href="#嵌套宏">嵌套宏</a></li>
+</ul></li>
+<li><a href="#function">function</a></li>
+<li><a href="#read-more">Read More</a></li>
+</ul></li>
+</ul>
+</nav>
+  </aside>
+
+
+
+  </main>
+  
+  
+  
+</body>
+
+</html>

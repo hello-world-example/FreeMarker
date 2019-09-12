@@ -15,7 +15,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://hello-world-example.github.io/FreeMarker/_sidebar/</guid>
-      <description> 常见问题  </description>
+      <description> 常见问题 StringTemplate 工具类 拆分模板  </description>
     </item>
     
     <item>
@@ -25,7 +25,31 @@
       
       <guid>https://hello-world-example.github.io/FreeMarker/docs/FAQ/</guid>
       <description>常见问题 输出   处理不存在的值   默认值 name!&amp;quot;unknown&amp;quot; (user.name)!&amp;quot;unknown&amp;quot;  空字符串 name! (user.name)!  判空 &amp;lt;#if (user.name)??&amp;gt; user.name 非空 &amp;lt;/#if&amp;gt; &amp;lt;#if !(user.name)??&amp;gt; user.name 为空 &amp;lt;/#if&amp;gt;  时间格式化 ${.now?string(&#39;yyyy-MM-dd HH:mm:ss.SSS&#39;)}  Boolean 类型输出 ${(1 == 2)?string(&#39;true&#39;,&#39;false&#39;)}  循环 List  序列切分
+循环变量内建函数
  &amp;lt;#list items as item&amp;gt; ${item?index} &amp;lt;/#list&amp;gt; &amp;lt;!-- 拼接 --&amp;gt; &amp;lt;#list [&amp;#34;Joe&amp;#34;, &amp;#34;Fred&amp;#34;] + [&amp;#34;Julia&amp;#34;, &amp;#34;Kate&amp;#34;] as user&amp;gt; ${user} &amp;lt;/#list&amp;gt; &amp;lt;!-- 切分 --&amp;gt; &amp;lt;#assert seq = [&amp;#34;A&amp;#34;, &amp;#34;B&amp;#34;, &amp;#34;C&amp;#34;, &amp;#34;D&amp;#34;, &amp;#34;E&amp;#34;]&amp;gt; &amp;lt;#list seq[1.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/FreeMarker/docs/Split/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/FreeMarker/docs/Split/</guid>
+      <description>拆分模板 include  http://www.kerneler.com/freemarker2.3.23/ref_directive_include.html
+主要用于导出模板片段
+ &amp;lt;!-- 查找指定文件 --&amp;gt; &amp;lt;#include &amp;#34;/common/copyright.ftl&amp;#34;&amp;gt; &amp;lt;!-- 从任意目录查找 --&amp;gt; &amp;lt;#include &amp;#34;*/commons/footer.ftl&amp;#34;&amp;gt; import  http://www.kerneler.com/freemarker2.3.23/ref_directive_import.html
+主要用来定 声明命名空间，导入指定模板中 宏、函数、变量 等
+ &amp;lt;#import &amp;#34;/libs/mylib.ftl&amp;#34; as my&amp;gt; &amp;lt;@my.copyright date=&amp;#34;1999-2002&amp;#34;/&amp;gt; macro  http://www.kerneler.com/freemarker2.3.23/ref_directive_macro.html
+ 无参数宏 &amp;lt;#macro test&amp;gt; Test text &amp;lt;/#macro&amp;gt; &amp;lt;!-- 调用 宏 --&amp;gt; &amp;lt;@test/&amp;gt; 有参数宏 &amp;lt;#macro test foo bar baaz&amp;gt; Test text, and the params: ${foo}, ${bar}, ${baaz} &amp;lt;/#macro&amp;gt; &amp;lt;@test foo=&amp;#34;a&amp;#34; bar=&amp;#34;b&amp;#34; baaz=5*5-2/&amp;gt; 可变参数宏 &amp;lt;#macro img src extra...&amp;gt; &amp;lt;img src=&amp;#34;/context${src?</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://hello-world-example.github.io/FreeMarker/docs/Tool/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://hello-world-example.github.io/FreeMarker/docs/Tool/</guid>
+      <description>StringTemplate 工具类 import freemarker.cache.StringTemplateLoader; import freemarker.template.Configuration; import freemarker.template.Template; import freemarker.template.TemplateException; import lombok.extern.slf4j.Slf4j; import java.io.IOException; import java.io.StringWriter; @Slf4j public class FreeMarkerTool { private static final Configuration CONF = new Configuration(Configuration.VERSION_2_3_21); static { CONF.setDefaultEncoding(&amp;#34;UTF-8&amp;#34;); CONF.setLogTemplateExceptions(true); CONF.setTemplateLoader(new StringTemplateLoader()); } /** * @param data 模版数据 * @param templateContent 模版内容 */ public static String process(Object data, String templateContent) throws TemplateException, IOException { String name = tplKey(templateContent); StringTemplateLoader templateLoader = (StringTemplateLoader) CONF.getTemplateLoader(); if (null == templateLoader.</description>
     </item>
     
   </channel>

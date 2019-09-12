@@ -51,6 +51,8 @@ ${(1 == 2)?string('true','false')}
 ### List
 
 > [序列切分](http://www.kerneler.com/freemarker2.3.23/dgui_template_exp.html#dgui_template_exp_seqenceop_slice)
+>
+> [循环变量内建函数](http://www.kerneler.com/freemarker2.3.23/ref_builtins_loop_var.html)
 
 ```html
 <#list items as item>
